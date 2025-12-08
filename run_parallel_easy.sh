@@ -5,7 +5,7 @@
 #$ -o logs/poke_parallel_easy.out
 #$ -e logs/poke_parallel_easy.err
 
-cd /projectnb/cs440/students/YOUR_KERBEROS/pokemon
+cd /projectnb/cs440/students/aking03/pokemon
 
 module load java
 
@@ -27,7 +27,7 @@ java -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
     -c 10 \
     -d adam \
     -g 0.99 \
-    -o /projectnb/cs440/students/YOUR_KERBEROS/pokemon/params/easy_qFunc \
+    -o /projectnb/cs440/students/aking03/pokemon/params/easy_qFunc \
     --seed 123 \
     -j 4 \
     > logs/poke_parallel_easy.log
