@@ -27,7 +27,7 @@ public class CustomRewardFunction extends RewardFunction {
     private static final double STEP_PENALTY = -0.005;
     private static final double STATUS_INFLICT_REWARD = 0.5;
     private static final double STATUS_RECEIVE_PENALTY = -0.3;
-    private static final double HP_DIFFERENTIAL_WEIGHT = 0.2;
+    private static final double HP_DIFFERENTIAL_WEIGHT = 0.0;  // DISABLED: Was encouraging stalling/passive play
     private static final double REDUNDANT_STATUS_PENALTY = -0.5;
 
     public CustomRewardFunction() {
@@ -44,7 +44,7 @@ public class CustomRewardFunction extends RewardFunction {
     @Override
     public double getUpperBound() {
         return WIN_REWARD + FAINT_OPPONENT_REWARD * 6 + DAMAGE_DEALT_WEIGHT * 6
-               + STATUS_INFLICT_REWARD * 6 + HP_DIFFERENTIAL_WEIGHT * 6;
+               + STATUS_INFLICT_REWARD * 6;  // Removed HP_DIFFERENTIAL_WEIGHT
     }
 
     @Override
@@ -156,9 +156,10 @@ public class CustomRewardFunction extends RewardFunction {
         }
 
         // 6. HP DIFFERENTIAL - Team health advantage
-        double myTeamHPPercent = calculateTeamHPPercent(myTeamAfter);
-        double oppTeamHPPercent = calculateTeamHPPercent(oppTeamAfter);
-        reward += HP_DIFFERENTIAL_WEIGHT * (myTeamHPPercent - oppTeamHPPercent);
+        // DISABLED: This was encouraging stalling/passive play instead of aggressive winning
+        // double myTeamHPPercent = calculateTeamHPPercent(myTeamAfter);
+        // double oppTeamHPPercent = calculateTeamHPPercent(oppTeamAfter);
+        // reward += HP_DIFFERENTIAL_WEIGHT * (myTeamHPPercent - oppTeamHPPercent);
 
         // 7. STEP PENALTY - Encourage efficiency
         reward += STEP_PENALTY;

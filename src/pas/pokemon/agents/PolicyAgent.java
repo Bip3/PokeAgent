@@ -86,20 +86,15 @@ public class PolicyAgent
         // Input layer size matches CustomSensorArray.NUM_FEATURES (70)
         int numFeatures = CustomSensorArray.NUM_FEATURES;
 
-        // Deeper network for complex Pokemon battle decisions
-        qFunction.add(new Dense(numFeatures, 256));
+        // Simplified 2-layer network for better training stability
+        // Previous 4-layer network (256->128->64->32) was too deep for this problem
+        qFunction.add(new Dense(numFeatures, 128));  // 70 -> 128
         qFunction.add(new ReLU());
 
-        qFunction.add(new Dense(256, 128));
+        qFunction.add(new Dense(128, 64));           // 128 -> 64
         qFunction.add(new ReLU());
 
-        qFunction.add(new Dense(128, 64));
-        qFunction.add(new ReLU());
-
-        qFunction.add(new Dense(64, 32));
-        qFunction.add(new ReLU());
-
-        qFunction.add(new Dense(32, 1));  // scalar Q(s,a) output
+        qFunction.add(new Dense(64, 1));             // 64 -> 1 (scalar Q(s,a) output)
 
         return qFunction;
     }
