@@ -59,9 +59,10 @@ public class PolicyAgent
 
     public void initializeSenses(Namespace args)
     {
-        SensorArray modelSenses = new CustomSensorArray();
+        SensorArray modelSenses = new CustomSensorArray(this);
         this.setSensorArray(modelSenses);
     }
+
 
     @Override
     public void initialize(Namespace args)

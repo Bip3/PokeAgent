@@ -29,15 +29,18 @@ public class CustomSensorArray
 
     public static final int NUM_FEATURES = 70;
 
-    public CustomSensorArray()
-    {
+    public CustomSensorArray(PolicyAgent agent) {
         super();
+        this.agent = agent;
     }
 
     public Matrix getSensorValues(final BattleView state, final MoveView action)
     {
         double[] features = new double[NUM_FEATURES];
         int idx = 0;
+
+        int myTeamIdx  = this.agent.getMyTeamIdx();
+        int oppTeamIdx = (myTeamIdx == 0) ? 1 : 0;
 
         // Get teams and active Pokemon
         TeamView myTeam = state.getTeam1View();
