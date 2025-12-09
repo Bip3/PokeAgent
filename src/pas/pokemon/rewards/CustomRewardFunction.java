@@ -20,13 +20,13 @@ public class CustomRewardFunction extends RewardFunction {
 
     // IM reward weights
     private static final double DAMAGE_DEALT_WEIGHT = 0.5;
-    private static final double DAMAGE_TAKEN_WEIGHT = -0.5;
+    private static final double DAMAGE_TAKEN_WEIGHT = -0.3;
     private static final double FAINT_OPPONENT_REWARD = 2.0;
     private static final double FAINT_SELF_PENALTY = -2.0;
     private static final double HP_DIFFERENTIAL_WEIGHT = 0.3;
     private static final double STATUS_INFLICT_REWARD = 0.3;
-    private static final double STATUS_RECEIVE_PENALTY = -0.3;
-    private static final double TYPE_ADVANTAGE_BONUS = 0.1;
+    private static final double STATUS_RECEIVE_PENALTY = -0.1;
+    private static final double TYPE_ADVANTAGE_BONUS = 1;
     private static final double STEP_PENALTY = -0.01;
 
     public CustomRewardFunction() {
@@ -169,7 +169,7 @@ public class CustomRewardFunction extends RewardFunction {
         }
 	//Stopping Infinite Stalling
 	if (action != null && action.getName().startsWith("SWITCH_")) {
-		reward += -.05;
+		reward += -.01;
 	}
 
         // Reduces stalling by adding a penalty. This bitch is a glass cannon
