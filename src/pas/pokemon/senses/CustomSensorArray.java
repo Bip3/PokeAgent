@@ -14,11 +14,13 @@ import edu.bu.pas.pokemon.core.enums.Type;
 import edu.bu.pas.pokemon.core.enums.Stat;
 import edu.bu.pas.pokemon.core.Move.Category;
 import edu.bu.pas.pokemon.linalg.Matrix;
+import src.pas.pokemon.agents.PolicyAgent;
 
 
 public class CustomSensorArray
     extends SensorArray
 {
+    private PolicyAgent agent;
 
     // My Pokemon: 20 features
     // Opponent Pokemon: 20 features

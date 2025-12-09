@@ -65,7 +65,7 @@ public class CustomRewardFunction extends RewardFunction {
         // Check for terminal states
     if (nextState.isOver()) {
         // Determine which team is mine
-        int myTeam = this.getMyTeamIdx();
+        int myTeam = this.getTeamIdx();
 
         TeamView myTeamEnd  = (myTeam == 0) ? nextState.getTeam1View()
                                             : nextState.getTeam2View();
