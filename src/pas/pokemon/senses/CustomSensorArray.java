@@ -146,6 +146,14 @@ public class CustomSensorArray
     private int extractMoveFeatures(MoveView move, PokemonView myPokemon, double[] features, int startIdx) {
         int idx = startIdx;
 
+        // Edge
+        if (move == null || myPokemon == null) {
+            for (int i = 0; i < 15; i++) {
+                features[idx++] = 0.0;
+            }
+            return idx;
+        }
+
         // Switch check
         boolean isSwitch = move.getName().startsWith("SWITCH_");
         features[idx++] = isSwitch ? 1.0 : 0.0;
