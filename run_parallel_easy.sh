@@ -10,9 +10,9 @@ mkdir -p logs params
 
 javac -cp "./lib/*:." @pokePA.srcs
 
-java -cp "./lib/*:." ParallelTrain \
-    src.pas.pokemon.agents.RandomAgent \
-    src.pas.pokemon.agents.GymBrockAgent \
+java -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
+    edu.bu.pas.pokemon.agents.RandomAgent \
+    edu.bu.pas.pokemon.agents.AggroAgent \
     -p 2000 \
     -t 500 \
     -v 200 \
@@ -24,7 +24,7 @@ java -cp "./lib/*:." ParallelTrain \
     -c 10 \
     -d adam \
     -g 0.99 \
-    -o /projectnb/cs440/students/aking03/pokemon/params/easy_qFunc \
+    -o params/easy_qFunc \
     --seed 123 \
     -j 4 \
     > logs/poke_parallel_easy.log
