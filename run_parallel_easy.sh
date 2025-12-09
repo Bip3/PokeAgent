@@ -31,7 +31,7 @@ java -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.p
     -c 10 \
     -d adam \
     -g 0.99 \
-    -o params/easy_qFunc \
+    -o params/easy_updated_qFunc \
     --seed 123 \
     -j 4 \
     > logs/poke_parallel_easy.log
