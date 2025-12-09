@@ -1,0 +1,10 @@
+/var/spool/sge/scc-ge2/job_scripts/2139024: line 8: cd: /projectnb/cs440/students/aking03/pokemon: No such file or directory
+/var/spool/sge/scc-ge2/job_scripts/2139024: line 10: module: command not found
+Error: Could not find or load main class edu.bu.pas.pokemon.ParallelTrain
+/var/spool/sge/scc-ge1/job_scripts/2139035: line 8: cd: /projectnb/cs440/students/aking03/pokemon: No such file or directory
+/var/spool/sge/scc-ge1/job_scripts/2139035: line 10: module: command not found
+Error: Could not find or load main class edu.bu.pas.pokemon.ParallelTrain
+/var/spool/sge/scc-ge3/job_scripts/2139067: line 8: cd: /projectnb/cs440/students/aking03/PokeAgent: No such file or directory
+/var/spool/sge/scc-ge3/job_scripts/2139067: line 10: module: command not found
+Error: Could not find or load main class edu.bu.pas.pokemon.ParallelTrain
+Error: Could not find or load main class edu.bu.pas.pokemon.ParallelTrain

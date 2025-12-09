@@ -1,19 +1,16 @@
 #!/bin/bash
-#$ -l h_rt=48:00:00             
+#$ -l h_rt=1:00:00             
 #$ -pe omp 4                    
 #$ -N poke_parallel_easy        
 #$ -o logs/poke_parallel_easy.out
 #$ -e logs/poke_parallel_easy.err
-
-cd /projectnb/cs440/students/aking03/pokemon
-
-module load java
+#$ -cwd
 
 mkdir -p logs params
 
 javac -cp "./lib/*:." @pokePA.srcs
 
-java -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
+java -cp "./lib/*:." ParallelTrain \
     src.pas.pokemon.agents.RandomAgent \
     src.pas.pokemon.agents.GymBrockAgent \
     -p 2000 \
