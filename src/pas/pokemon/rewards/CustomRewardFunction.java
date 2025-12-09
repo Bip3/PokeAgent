@@ -64,13 +64,9 @@ public class CustomRewardFunction extends RewardFunction {
 
         // Check for terminal states
     if (nextState.isOver()) {
-        // Determine which team is mine
-        int myTeam = this.getTeamIdx();
-
-        TeamView myTeamEnd  = (myTeam == 0) ? nextState.getTeam1View()
-                                            : nextState.getTeam2View();
-        TeamView oppTeamEnd = (myTeam == 0) ? nextState.getTeam2View()
-                                            : nextState.getTeam1View();
+        // Determine which team is mine (Team 1 is us, Team 2 is opponent)
+        TeamView myTeamEnd = nextState.getTeam1View();
+        TeamView oppTeamEnd = nextState.getTeam2View();
 
         boolean iWon = countFaintedPokemon(oppTeamEnd) == oppTeamEnd.size()
                     && countFaintedPokemon(myTeamEnd) < myTeamEnd.size();

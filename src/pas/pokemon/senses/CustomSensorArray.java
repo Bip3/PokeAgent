@@ -14,14 +14,11 @@ import edu.bu.pas.pokemon.core.enums.Type;
 import edu.bu.pas.pokemon.core.enums.Stat;
 import edu.bu.pas.pokemon.core.Move.Category;
 import edu.bu.pas.pokemon.linalg.Matrix;
-import src.pas.pokemon.agents.PolicyAgent;
 
 
 public class CustomSensorArray
     extends SensorArray
 {
-    private PolicyAgent agent;
-
     // My Pokemon: 20 features
     // Opponent Pokemon: 20 features
     // My Team: 6 features
@@ -31,18 +28,14 @@ public class CustomSensorArray
 
     public static final int NUM_FEATURES = 70;
 
-    public CustomSensorArray(PolicyAgent agent) {
+    public CustomSensorArray() {
         super();
-        this.agent = agent;
     }
 
     public Matrix getSensorValues(final BattleView state, final MoveView action)
     {
         double[] features = new double[NUM_FEATURES];
         int idx = 0;
-
-        int myTeamIdx  = this.agent.getMyTeamIdx();
-        int oppTeamIdx = (myTeamIdx == 0) ? 1 : 0;
 
         // Get teams and active Pokemon
         TeamView myTeam = state.getTeam1View();
