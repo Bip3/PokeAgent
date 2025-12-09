@@ -167,6 +167,10 @@ public class CustomRewardFunction extends RewardFunction {
                 reward += TYPE_ADVANTAGE_BONUS * effectiveness;
             }
         }
+	//Stopping Infinite Stalling
+	if (action != null && action.getName().startsWith("SWITCH_")) {
+		reward += -.05;
+	}
 
         // Reduces stalling by adding a penalty. This bitch is a glass cannon
         reward += STEP_PENALTY;
