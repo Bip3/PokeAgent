@@ -29,18 +29,28 @@ public class CustomRewardFunction extends RewardFunction {
     private static final double TYPE_ADVANTAGE_BONUS = 1;
     private static final double STEP_PENALTY = -0.01;
 
+    // New strategic reward weights
+    private static final double OFFENSIVE_STATUS_BONUS = 0.5;  // Extra reward for offensive status effects
+    private static final double COMBO_BONUS = 1.5;  // Bonus for super effective + offensive status combo
+    private static final double REDUNDANT_STATUS_PENALTY = -1.0;  // Penalty for redundant status moves
+    private static final double HIGH_POWER_MOVE_BONUS = 0.8;  // Bonus for high power moves (>= 80 power)
+    private static final double EFFECTIVE_SWITCH_BONUS = 0.7;  // Bonus for switching to effective attacker after status
+
     public CustomRewardFunction() {
         super(RewardType.STATE_ACTION_STATE);
     }
 
     @Override
     public double getLowerBound() {
-        return LOSS_REWARD + FAINT_SELF_PENALTY * 6 + DAMAGE_TAKEN_WEIGHT * 5;
+        return LOSS_REWARD + FAINT_SELF_PENALTY * 6 + DAMAGE_TAKEN_WEIGHT * 5 +
+               REDUNDANT_STATUS_PENALTY * 3 + STATUS_RECEIVE_PENALTY * 6;
     }
 
     @Override
     public double getUpperBound() {
-        return WIN_REWARD + FAINT_OPPONENT_REWARD * 6 + DAMAGE_DEALT_WEIGHT * 5;
+        return WIN_REWARD + FAINT_OPPONENT_REWARD * 6 + DAMAGE_DEALT_WEIGHT * 5 +
+               TYPE_ADVANTAGE_BONUS * 2 + COMBO_BONUS * 6 + OFFENSIVE_STATUS_BONUS * 6 +
+               HIGH_POWER_MOVE_BONUS * 6 + EFFECTIVE_SWITCH_BONUS * 3;
     }
 
     @Override
@@ -142,21 +152,32 @@ public class CustomRewardFunction extends RewardFunction {
         // Status Effect Rewards
         String oppStatusBefore = oppPokemonBefore.getNonVolatileStatus().toString();
         String oppStatusAfter = oppPokemonAfter.getNonVolatileStatus().toString();
-
-        if (!oppStatusBefore.equals(oppStatusAfter) && !oppStatusAfter.equals("NONE")) {
-            reward += STATUS_INFLICT_REWARD;
-        }
-
-        // Status Effect Penalty
         String myStatusBefore = myPokemonBefore.getNonVolatileStatus().toString();
         String myStatusAfter = myPokemonAfter.getNonVolatileStatus().toString();
 
+        // Check for redundant status application (trying to inflict status on already statused pokemon)
+        if (!oppStatusBefore.equals("NONE") && !oppStatusBefore.equals(oppStatusAfter)) {
+            // Trying to change an existing status - penalize this
+            reward += REDUNDANT_STATUS_PENALTY;
+        } else if (!oppStatusBefore.equals(oppStatusAfter) && !oppStatusAfter.equals("NONE")) {
+            // Successfully inflicted a new status
+            reward += STATUS_INFLICT_REWARD;
+
+            // Extra bonus for offensive status effects
+            if (isOffensiveStatus(oppStatusAfter)) {
+                reward += OFFENSIVE_STATUS_BONUS;
+            }
+        }
+
+        // Penalty for receiving status
         if (!myStatusBefore.equals(myStatusAfter) && !myStatusAfter.equals("NONE")) {
             reward += STATUS_RECEIVE_PENALTY;
         }
 
-        // Super Effective Moves!
+        // Super Effective Moves and High Power Move Rewards
         Integer actionPower = action.getPower();
+        boolean isSuperEffective = false;
+
         if (actionPower != null && actionPower > 0) {
             double effectiveness = Type.getEffectivenessModifier(action.getType(), oppPokemonBefore.getCurrentType1());
             if (oppPokemonBefore.getCurrentType2() != null) {
@@ -165,6 +186,31 @@ public class CustomRewardFunction extends RewardFunction {
 
             if (effectiveness > 1.0) {
                 reward += TYPE_ADVANTAGE_BONUS * effectiveness;
+                isSuperEffective = true;
+            }
+
+            // Reward high power moves (>= 80 power)
+            if (actionPower >= 80) {
+                reward += HIGH_POWER_MOVE_BONUS;
+            }
+
+            // Combo bonus: Super effective attack on pokemon with offensive status
+            if (isSuperEffective && isOffensiveStatus(oppStatusBefore)) {
+                reward += COMBO_BONUS;
+            }
+        }
+
+        // Reward switching to a more effective attacker after opponent has offensive status
+        if (action != null && action.getName().startsWith("SWITCH_")) {
+            if (isOffensiveStatus(oppStatusBefore)) {
+                // Check if the new pokemon has type advantage
+                PokemonView newPokemon = myPokemonAfter;
+                if (!newPokemon.equals(myPokemonBefore)) {
+                    // Switched to a different pokemon, check for potential type advantage
+                    // We'll give a bonus if the new pokemon could be more effective
+                    // This encourages switching to better attackers after status is applied
+                    reward += EFFECTIVE_SWITCH_BONUS;
+                }
             }
         }
 	//Stopping Infinite Stalling
@@ -187,6 +233,12 @@ public class CustomRewardFunction extends RewardFunction {
             }
         }
         return fainted;
+    }
+
+    // Check if a status effect is offensive (damage-dealing or confusion)
+    private boolean isOffensiveStatus(String status) {
+        return status.equals("POISON") || status.equals("TOXIC") ||
+               status.equals("BURN") || status.equals("CONFUSION");
     }
 
      //Getting HP for all pokemon in a team.
