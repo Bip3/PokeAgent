@@ -15,7 +15,7 @@ export MKL_NUM_THREADS=4
 export VECLIB_MAXIMUM_THREADS=4
 export NUMEXPR_NUM_THREADS=4
 
-javac -cp "./lib/*:." @pokePA.srcs
+javac -cp ".:./lib/*" @pokePA.srcs
 
 # Optional: Set PARAMS_FILE to start from existing params
 # Example: export PARAMS_FILE="params/easy_updated_qFunc.model"
@@ -25,7 +25,7 @@ if [ ! -z "$PARAMS_FILE" ]; then
     echo "Loading existing params from: $PARAMS_FILE"
 fi
 
-java -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
+java -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp ".:./lib/*" edu.bu.pas.pokemon.ParallelTrain \
     edu.bu.pas.pokemon.agents.Drac5290Agent \
     -p 2000 \
     -t 250 \
