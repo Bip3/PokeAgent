@@ -25,13 +25,13 @@ javac -cp "./lib/*:." @pokePA.srcs
 #    echo "Loading existing params from: $PARAMS_FILE"
 #fi
 
-java -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
+java -Xmx8g -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
     edu.bu.pas.pokemon.agents.AggroAgent \
     edu.bu.pas.pokemon.agents.Drac5290Agent \
     -p 2000 \
-    -t 500 \
+    -t 250 \
     -v 200 \
-    -b 15000 \
+    -b 10000 \
     -r RANDOM \
     -u 2 \
     -m 128 \
@@ -41,6 +41,6 @@ java -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.p
     -g 0.99 \
     -o params/hard_updated_qFunc \
     --seed 123 \
-    -j 4 \
+    -j 2 \
     $LOAD_PARAMS \
     > logs/poke_parallel_hard.log
