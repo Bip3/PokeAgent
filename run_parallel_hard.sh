@@ -19,14 +19,13 @@ javac -cp "./lib/*:." @pokePA.srcs
 
 # Optional: Set PARAMS_FILE to start from existing params
 # Example: export PARAMS_FILE="params/easy_updated_qFunc.model"
-#LOAD_PARAMS=""
-#if [ ! -z "$PARAMS_FILE" ]; then
-#    LOAD_PARAMS="-i $PARAMS_FILE"
-#    echo "Loading existing params from: $PARAMS_FILE"
-#fi
+LOAD_PARAMS=""
+if [ ! -z "$PARAMS_FILE" ]; then
+    LOAD_PARAMS="-i $PARAMS_FILE"
+    echo "Loading existing params from: $PARAMS_FILE"
+fi
 
-java -Xmx8g -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
-    edu.bu.pas.pokemon.agents.AggroAgent \
+java -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
     edu.bu.pas.pokemon.agents.Drac5290Agent \
     -p 2000 \
     -t 250 \
