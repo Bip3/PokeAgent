@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -l h_rt=2:00:00
+#$ -l h_rt=8:00:00
 #$ -pe omp 4
 #$ -N poke_parallel_hard
 #$ -o logs/poke_parallel_hard.out
