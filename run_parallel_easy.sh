@@ -2,8 +2,8 @@
 #$ -l h_rt=12:00:00
 #$ -pe omp 4
 #$ -N poke_parallel_easy
-#$ -o logs/poke_parallel_easy.out
-#$ -e logs/poke_parallel_easy.err
+#$ -o logs/reduced/poke_parallel_easy.out
+#$ -e logs/reduced/poke_parallel_easy.err
 #$ -cwd
 
 mkdir -p logs params
@@ -31,7 +31,7 @@ java -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.p
     -c 10 \
     -d adam \
     -g 0.99 \
-    -o params/easy_updated_qFunc \
+    -o params/reduced/easy_updated_qFunc \
     --seed 123 \
     -j 4 \
-    > logs/poke_parallel_easy.log
+    > logs/reduced/poke_parallel_easy.log
