@@ -18,7 +18,7 @@ export NUMEXPR_NUM_THREADS=4
 javac -cp "./lib/*:." @pokePA.srcs
 
 # Load your best model as starting point (the one that got 100% on autograder)
-BEST_MODEL="params/Newmodels/easy_resume95/easy_qfunc_resume95.model"
+BEST_MODEL="params/reduced/easy_updated_qFunc63.model"
 
 java -Xmx8g -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.pas.pokemon.ParallelTrain \
     src.pas.pokemon.agents.PolicyAgent \
