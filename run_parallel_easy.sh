@@ -1,5 +1,5 @@
 #!/bin/bash
-#$ -l h_rt=1:00:00
+#$ -l h_rt=12:00:00
 #$ -pe omp 4
 #$ -N poke_parallel_easy
 #$ -o logs/poke_parallel_easy.out
@@ -25,9 +25,9 @@ java -XX:ActiveProcessorCount=4 -XX:ParallelGCThreads=2 -cp "./lib/*:." edu.bu.p
     -v 200 \
     -b 15000 \
     -r RANDOM \
-    -u 2 \
+    -u 10 \
     -m 128 \
-    -n 1e-5 \
+    -n 5e-4 \
     -c 10 \
     -d adam \
     -g 0.99 \

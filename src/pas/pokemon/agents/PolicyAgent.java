@@ -35,7 +35,7 @@ public class PolicyAgent
     private double epsilon;
     private static final double EPSILON_START = 1.0;  // Start with 100% exploration
     private static final double EPSILON_END = 0.05;   // End with 5% exploration
-    private static final double EPSILON_DECAY = 0.9995; // Decay rate per game
+    private static final double EPSILON_DECAY = 0.995; // Decay rate per game
 
     // Statistics tracking
     private int gamesPlayed;
