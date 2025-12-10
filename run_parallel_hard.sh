@@ -19,7 +19,7 @@ javac -cp "./lib/*:." @pokePA.srcs
 
 # Optional: Set PARAMS_FILE to start from existing params
 # Example: export PARAMS_FILE="params/easy_updated_qFunc.model"
-LOAD_PARAMS=""
+LOAD_PARAMS="params/selfplay/red_training321.model"
 if [ ! -z "$PARAMS_FILE" ]; then
     LOAD_PARAMS="-i $PARAMS_FILE"
     echo "Loading existing params from: $PARAMS_FILE"
